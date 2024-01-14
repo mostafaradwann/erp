@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvmanagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth', 'role:admin'])->group(function(){
+    Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+
+});// end group admin middleware
+
+Route::middleware(['auth', 'role:invManager'])->group(function(){
+    Route::get('/invmanager/dashboard', [InvmanagerController::class, 'InvmanagerDashboard'])->name('invmanager.dashboard');
+
+});// end group invetory manager middleware
